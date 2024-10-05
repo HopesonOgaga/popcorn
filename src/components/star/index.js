@@ -31,7 +31,7 @@ export default function StarRating({ maxRating = 5 }) {
           ></Star>
         ))}
       </div>
-      <p style={textStyle}>{tempRating || rating || ""}</p> 
+      <p style={textStyle}>{tempRating || rating || ""}</p>
     </div>
   );
 }
@@ -43,7 +43,7 @@ const starStyle = {
   Cursor: "pointer",
 };
 
-function Star({ onRate, full , onHoverOut , onHoverIn}) {
+function Star({ onRate, full, onHoverOut, onHoverIn }) {
   return (
     <span
       role="button"
