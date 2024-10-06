@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import propTypes from "prop-types";
 const containerStyle = {
   display: "flex",
   alignItems: "center",
@@ -9,13 +10,21 @@ const starContainer = {
   display: "flex",
   gap: "4px",
 };
-
+StarRating.propTypes = {
+  maxRating: propTypes.number,
+  size: propTypes.number,
+  color: propTypes.string,
+  defaultRating: propTypes.string,
+  messages: propTypes.array,
+};
 export default function StarRating({
   maxRating = 5,
   color = "#fcc419",
   size = 48,
+  messages = [],
+  defaultRating = 0,
 }) {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(defaultRating);
   const [tempRating, settempRating] = useState(0);
 
   const textStyle = {
@@ -40,19 +49,16 @@ export default function StarRating({
           ></Star>
         ))}
       </div>
-      <p style={textStyle}>{tempRating || rating || ""}</p>
+      <p style={textStyle}>
+        {messages.length === maxRating
+          ? messages[tempRating ? tempRating - 1 : rating - 1]
+          : tempRating || rating || ""}
+      </p>
     </div>
   );
 }
 
-function Star({
-  onRate,
-  full,
-  onHoverOut,
-  onHoverIn, 
-  size = 48, 
-  color
-}) {
+function Star({ onRate, full, onHoverOut, onHoverIn, size = 48, color }) {
   const starStyle = {
     width: `${size}px`,
     height: `${size}px`,
@@ -67,7 +73,7 @@ function Star({
       onMouseLeave={onHoverOut}
       onClick={onRate}
     >
-      {full ? ( 
+      {full ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
